@@ -1,14 +1,25 @@
 package fr.isen.java2.db.daos;
 
 import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fr.isen.java2.db.entities.Genre;
+import fr.isen.java2.db.entities.Movie;
+
 public class MovieDaoTestCase {
+
+	private MovieDao movieDao = new MovieDao();
+
 	@BeforeEach
 	public void initDb() throws Exception {
 		Connection connection = DataSourceFactory.getDataSource().getConnection();
@@ -39,16 +50,47 @@ public class MovieDaoTestCase {
 	
 	 @Test
 	 public void shouldListMovies() {
-		 fail("Not yet implemented");
+
+		 // WHEN
+		 List<Movie> movies = movieDao.listMovies();
+		 // THEN
+		 assertThat(movies).hasSize(3);
+		 assertThat(movies).extracting("title", "director").containsOnly(
+				 tuple("Title 1", "director 1"),
+				 tuple("My Title 2", "director 2"),
+				 tuple("Third title", "director 3")
+		 );
 	 }
 	
 	 @Test
 	 public void shouldListMoviesByGenre() {
-		 fail("Not yet implemented");
+		 // WHEN
+		 List<Movie> movies = movieDao.listMoviesByGenre("Comedy");
+		 // THEN
+		 assertThat(movies).hasSize(2);
+		 assertThat(movies).extracting("title", "director").containsOnly(
+				 tuple("My Title 2", "director 2"),
+				 tuple("Third title", "director 3")
+		 );
 	 }
 	
 	 @Test
 	 public void shouldAddMovie() throws Exception {
-		 fail("Not yet implemented");
+		 // GIVEN
+		 Movie movie = new Movie("New Movie", LocalDate.of(2023, 10, 10), new Genre(1, "Drama"), 150, "New Director", "New Summary");
+		 // WHEN
+		 movieDao.addMovie(movie);
+		 // THEN
+		 Connection connection = DataSourceFactory.getDataSource().getConnection();
+		 Statement statement = connection.createStatement();
+		 ResultSet resultSet = statement.executeQuery("SELECT * FROM movie WHERE title='New Movie'");
+		 assertThat(resultSet.next()).isTrue();
+		 assertThat(resultSet.getInt("idmovie")).isNotNull();
+		 assertThat(resultSet.getString("title")).isEqualTo("New Movie");
+		 assertThat(resultSet.getString("director")).isEqualTo("New Director");
+		 assertThat(resultSet.next()).isFalse();
+		 resultSet.close();
+		 statement.close();
+		 connection.close();
 	 }
 }
