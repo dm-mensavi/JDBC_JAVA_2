@@ -1,0 +1,36 @@
+Structure and Steps to Follow
+Setup the Project:
+    Download and extract the starting project code.
+    Import the project into IntelliJ IDEA.
+    Update Maven dependencies.
+
+Implement GenreDao:
+    Implement listGenres.
+    Implement getGenre.
+    Implement addGenre.
+
+Test GenreDao:
+    Run the provided GenreDaoTestCase to ensure your implementation is correct.
+
+Implement MovieDao:
+    Implement listMovies.
+    Implement listMoviesByGenre.
+    Implement addMovie.
+
+Test MovieDao:
+    Write and run tests in MovieDaoTestCase to ensure your implementation is correct.
+
+Bonus Stage:
+    Refactor to use DriverManager for database connections.
+    Ensure the code compiles without the SQLite dependency.
+
+Final Checks:
+    Ensure all tests pass.
+    Review and clean up the code.
+    Document the code and ensure readability.
+    Create a .gitignore file to exclude unnecessary files.
+
+Submit the Project:
+    Push the project to GitHub or GitLab.
+    Ensure the last commit is before the deadline.
+    Send the project link to the instructor.
