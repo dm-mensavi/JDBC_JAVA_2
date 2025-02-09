@@ -3,6 +3,8 @@ package fr.isen.java2.db.daos;
 import java.util.List;
 
 import fr.isen.java2.db.entities.Movie;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class MovieDao {
 
