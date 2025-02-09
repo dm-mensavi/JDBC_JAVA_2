@@ -6,8 +6,16 @@ import java.util.List;
 
 import fr.isen.java2.db.entities.Genre;
 
+/**
+ * GenreDao is a Data Access Object class that provides methods to interact with the genre table in the database.
+ */
 public class GenreDao {
 
+	/**
+	 * Lists all genres in the database.
+	 *
+	 * @return a list of Genre objects
+	 */
 	public List<Genre> listGenres() {
 		List<Genre> genres = new ArrayList<>();
 		String sql = "SELECT * FROM genre";
@@ -24,6 +32,12 @@ public class GenreDao {
 		return genres;
 	}
 
+	/**
+	 * Gets a genre by its name.
+	 *
+	 * @param name the name of the genre
+	 * @return a Genre object or null if the genre is not found
+	 */
 	public Genre getGenre(String name) {
 		Genre genre = null;
 		String sql = "SELECT * FROM genre WHERE name = ?";
@@ -41,6 +55,11 @@ public class GenreDao {
 		return genre;
 	}
 
+	/**
+	 * Adds a new genre to the database.
+	 *
+	 * @param name the name of the genre to add
+	 */
 	public void addGenre(String name) {
 		String sql = "INSERT INTO genre (name) VALUES (?)";
 		try (Connection connection = DataSourceFactory.getConnection();

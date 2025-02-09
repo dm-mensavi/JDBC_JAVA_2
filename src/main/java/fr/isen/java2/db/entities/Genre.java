@@ -1,5 +1,8 @@
 package fr.isen.java2.db.entities;
 
+/**
+ * Genre is an entity class that represents a genre in the database.
+ */
 public class Genre {
 	private Integer id;
 	private String name;

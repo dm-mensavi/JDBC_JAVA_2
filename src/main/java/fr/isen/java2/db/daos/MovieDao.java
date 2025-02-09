@@ -8,8 +8,16 @@ import fr.isen.java2.db.entities.Genre;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * MovieDao is a Data Access Object class that provides methods to interact with the movie table in the database.
+ */
 public class MovieDao {
 
+	/**
+	 * Lists all movies in the database.
+	 *
+	 * @return a list of Movie objects
+	 */
 	public List<Movie> listMovies() {
 		List<Movie> movies = new ArrayList<>();
 		String sql = "SELECT * FROM movie JOIN genre ON movie.genre_id = genre.idgenre";
@@ -28,6 +36,12 @@ public class MovieDao {
 		return movies;
 	}
 
+	/**
+	 * Lists all movies of a specific genre.
+	 *
+	 * @param genreName the name of the genre
+	 * @return a list of Movie objects
+	 */
 	public List<Movie> listMoviesByGenre(String genreName) {
 		List<Movie> movies = new ArrayList<>();
 		String sql = "SELECT * FROM movie JOIN genre ON movie.genre_id = genre.idgenre WHERE genre.name = ?";
@@ -48,6 +62,12 @@ public class MovieDao {
 		return movies;
 	}
 
+	/**
+	 * Adds a new movie to the database.
+	 *
+	 * @param movie the Movie object to add
+	 * @return the added Movie object
+	 */
 	public Movie addMovie(Movie movie) {
 		String sql = "INSERT INTO movie (title, release_date, genre_id, duration, director, summary) VALUES (?, ?, ?, ?, ?, ?)";
 		try (Connection connection = DataSourceFactory.getConnection();

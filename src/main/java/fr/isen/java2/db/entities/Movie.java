@@ -12,9 +12,9 @@ public class Movie {
 	private String director;
 	private String summary;
 
-	public Movie() {
-	}
-
+	/**
+	 * Genre is an entity class that represents a genre in the database.
+	 */
 	public Movie(Integer id, String title, LocalDate releaseDate, Genre genre, Integer duration, String director,
 			String summary) {
 		super();

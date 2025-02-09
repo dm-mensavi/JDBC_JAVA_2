@@ -1,10 +1,13 @@
 package fr.isen.java2.db.daos;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * DataSourceFactory is a utility class that provides a method to get a connection to the SQLite database.
+ * This class should not be instantiated.
+ */
 public class DataSourceFactory {
 
 	private static final String URL = "jdbc:sqlite:sqlite.db";
@@ -17,10 +20,16 @@ public class DataSourceFactory {
 	}
 
 	/**
-	 * @return a connection to the SQLite Database
-	 * 
+	 * Gets a connection to the SQLite database.
+	 *
+	 * @return a Connection object to the SQLite database
+	 * @throws SQLException if a database access error occurs or the URL is null
 	 */
 	public static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(URL);
+		try {
+			return DriverManager.getConnection(URL);
+		} catch (SQLException e) {
+			throw new SQLException("SQLite driver not found. Ensure the SQLite dependency is included.", e);
+		}
 	}
 }
