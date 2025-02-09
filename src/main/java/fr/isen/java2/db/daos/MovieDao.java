@@ -13,7 +13,7 @@ public class MovieDao {
 	public List<Movie> listMovies() {
 		List<Movie> movies = new ArrayList<>();
 		String sql = "SELECT * FROM movie JOIN genre ON movie.genre_id = genre.idgenre";
-		try (Connection connection = DataSourceFactory.getDataSource().getConnection();
+		try (Connection connection = DataSourceFactory.getConnection();
 			 Statement stmt = connection.createStatement();
 			 ResultSet rs = stmt.executeQuery(sql)) {
 			while (rs.next()) {
@@ -31,7 +31,7 @@ public class MovieDao {
 	public List<Movie> listMoviesByGenre(String genreName) {
 		List<Movie> movies = new ArrayList<>();
 		String sql = "SELECT * FROM movie JOIN genre ON movie.genre_id = genre.idgenre WHERE genre.name = ?";
-		try (Connection connection = DataSourceFactory.getDataSource().getConnection();
+		try (Connection connection = DataSourceFactory.getConnection();
 			 PreparedStatement pstmt = connection.prepareStatement(sql)) {
 			pstmt.setString(1, genreName);
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -50,7 +50,7 @@ public class MovieDao {
 
 	public Movie addMovie(Movie movie) {
 		String sql = "INSERT INTO movie (title, release_date, genre_id, duration, director, summary) VALUES (?, ?, ?, ?, ?, ?)";
-		try (Connection connection = DataSourceFactory.getDataSource().getConnection();
+		try (Connection connection = DataSourceFactory.getConnection();
 			 PreparedStatement pstmt = connection.prepareStatement(sql)) {
 			pstmt.setString(1, movie.getTitle());
 			pstmt.setDate(2, Date.valueOf(movie.getReleaseDate()));

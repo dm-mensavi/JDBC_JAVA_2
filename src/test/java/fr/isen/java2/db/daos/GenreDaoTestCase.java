@@ -19,7 +19,7 @@ public class GenreDaoTestCase {
 
 	@BeforeEach
 	public void initDatabase() throws Exception {
-		Connection connection = DataSourceFactory.getDataSource().getConnection();
+		Connection connection = DataSourceFactory.getConnection();
 		Statement stmt = connection.createStatement();
 		stmt.executeUpdate(
 				"CREATE TABLE IF NOT EXISTS genre (idgenre INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , name VARCHAR(50) NOT NULL);");
@@ -41,7 +41,7 @@ public class GenreDaoTestCase {
 		assertThat(genres).extracting("id", "name").containsOnly(tuple(1, "Drama"), tuple(2, "Comedy"),
 				tuple(3, "Thriller"));
 	}
-	
+
 	@Test
 	public void shouldGetGenreByName() {
 		// WHEN
@@ -50,7 +50,7 @@ public class GenreDaoTestCase {
 		assertThat(genre.getId()).isEqualTo(2);
 		assertThat(genre.getName()).isEqualTo("Comedy");
 	}
-	
+
 	@Test
 	public void shouldNotGetUnknownGenre() {
 		// WHEN
@@ -58,13 +58,13 @@ public class GenreDaoTestCase {
 		// THEN
 		assertThat(genre).isNull();
 	}
-	
+
 	@Test
 	public void shouldAddGenre() throws Exception {
-		// WHEN 
+		// WHEN
 		genreDao.addGenre("Western");
 		// THEN
-		Connection connection = DataSourceFactory.getDataSource().getConnection();
+		Connection connection = DataSourceFactory.getConnection();
 		Statement statement = connection.createStatement();
 		ResultSet resultSet = statement.executeQuery("SELECT * FROM genre WHERE name='Western'");
 		assertThat(resultSet.next()).isTrue();
